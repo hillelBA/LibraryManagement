@@ -3,5 +3,8 @@ public class PhysicalBook extends Book {
         super(title, author, yearPublished, copies);
     }
 
-
+    @Override
+    public void addToGenre(Genre genre) {
+        genre.addBook(this);
+    }
 }

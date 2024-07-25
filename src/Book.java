@@ -12,5 +12,62 @@ public abstract class Book implements Cloneable {
         this.availableCopies = copies;
         this.copies = copies;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+
+
+    public int getYearPublished() {
+        return yearPublished;
+    }
+
+
+    public int getCopies() {
+        return copies;
+    }
+
+    public void setCopies(int copies) {
+        this.copies = copies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public boolean isAvailable() {
+        return availableCopies > 0;
+    }
+
+    public void loanBook() {
+        if (isAvailable()) {
+            availableCopies--;
+        }
+    }
+    public void returnBook() {
+        if (availableCopies < copies) {
+            availableCopies++;
+        }
+    }
+
+    @Override
+    public Book clone() {
+        try {
+            return (Book) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
+
+    public abstract void addToGenre(Genre genre);
 }
 

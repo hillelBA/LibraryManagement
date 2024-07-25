@@ -12,6 +12,52 @@ public class Member implements Observer {
         this.maxBooks = maxBooks;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public int getMaxBooks() {
+        return maxBooks;
+    }
+
+    public void setMaxBooks(int maxBooks) {
+        this.maxBooks = maxBooks;
+    }
+
+    public boolean canBorrowBook() {
+        return loans.size() < maxBooks;
+    }
+
+    public void borrowBook(Loan loan) {
+        if (canBorrowBook()) {
+            loans.add(loan);
+        } else {
+            System.out.println("Cannot borrow more books.");
+        }
+    }
+
+    public Loan returnBook(Book book) {
+        for (Loan loan : loans) {
+            if (loan.getBook().equals(book) && loan.getReturnDate() == null) {
+                loans.remove(loan);
+                return loan;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void update() {
         // Implementation for the Observer update method
