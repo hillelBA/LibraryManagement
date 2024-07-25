@@ -1,6 +1,6 @@
 
 # UML:
-<img src="uml.png">
+<img src="src/uml.png">
 
 ## Library Management System Briefing
 ### Classes and Methods
