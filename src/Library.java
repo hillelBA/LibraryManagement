@@ -12,15 +12,15 @@ public class Library {
     /**
      * The list of genres in the library.
      */
-    private List<Genre> genres;
+    private final List<Genre> genres;
     /**
      * The list of members in the library.
      */
-    private List<Member> members;
+    private final List<Member> members;
     /**
      * The list of observers of the library.
      */
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     /**
      * The genre options.
@@ -128,13 +128,6 @@ public class Library {
         for (Observer observer : observers) {
             observer.lateToReturn();
         }
-    }
-
-    /**
-     * Updates the library.
-     */
-    public void updateLibrary() {
-        notifyObservers();
     }
 
     /**

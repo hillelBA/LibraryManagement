@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,11 +8,11 @@ public class Librarian {
     /**
      * The library.
      */
-    private Library library;
+    private final Library library;
     /**
      * The list of loans.
      */
-    private List<Loan> loans;
+    private final List<Loan> loans;
     /**
      * Creates a new librarian.
      */
@@ -34,7 +33,6 @@ public class Librarian {
      */
     public void addBookToGenre(Book book, Genre genre) {
         genre.addBook(book);
-        library.updateLibrary();
     }
     /**
      * Removes a book from a genre.
@@ -43,7 +41,6 @@ public class Librarian {
      */
     public void removeBookFromGenre(Book book, Genre genre) {
         genre.removeBook(book);
-        library.updateLibrary();
     }
 /**
      * Registers a member.
@@ -51,7 +48,6 @@ public class Librarian {
      */
     public void registerMember(Member member) {
         library.addMember(member);
-        library.updateLibrary();
     }
 /**
      * Deregisters a member.
@@ -59,7 +55,6 @@ public class Librarian {
      */
     public void deregisterMember(Member member) {
         library.removeMember(member);
-        library.updateLibrary();
     }
 /**
      * Loans a book to a member.
@@ -72,7 +67,6 @@ public class Librarian {
             member.borrowBook(loan);
             loans.add(loan);
             book.loanBook();
-            library.updateLibrary();
         } else {
             System.out.println("The book is currently not available or member can't borrow more books.");
         }
@@ -83,13 +77,17 @@ public class Librarian {
      * @param member The member to return the book from.
      */
     public void returnBookFromMember(Book book, Member member) {
-        Loan loan = member.returnBook(book);
-        if (loan != null) {
-            loan.setReturnDate(new Date());
-            book.returnBook();
-            library.updateLibrary();
-        } else {
-            System.out.println("The book was not loaned by the member.");
+        for (int i = 0; i <loans.size(); i++) {
+            if (loans.get(i).getBook().equals(book)) {
+                for (int j = 0; j < member.getLoans().size(); j++) {
+                    if (member.getLoans().contains(loans.get(i))) {
+                        loans.remove(i);
+                        member.getLoans().remove(j);
+                        book.returnBook();
+                        break;
+                    }
+                }
+            }
         }
     }
 }

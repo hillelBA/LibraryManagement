@@ -7,11 +7,11 @@ public class LibraryFacade {
     /**
      * The library.
      */
-    private Library library;
+    private final Library library;
     /**
      * The librarian.
      */
-    private Librarian librarian;
+    private final Librarian librarian;
 
     /**
      * Creates a new library facade.
@@ -71,7 +71,16 @@ public class LibraryFacade {
         BookFactory bookFactory = isPhysical ? new PhysicalBookFactory() : new VirtualBookFactory();
         Book book = bookFactory.createBook(title, author, yearPublished, copies);
         librarian.addBookToGenre(book, genre);
-        library.updateLibrary();  // Notify observers
+    }
+
+    /**
+     * Adds a book to a genre.
+     *
+     * @param book         The book to add.
+     * @param genre         The genre to add the book to.
+     */
+    public void addBookToGenre(Book book, Genre genre) {
+        librarian.addBookToGenre(book, genre);
     }
 
     /**
@@ -82,7 +91,6 @@ public class LibraryFacade {
      */
     public void loanBookToMember(Book book, Member member) {
         librarian.loanBookToMember(book, member);
-        library.updateLibrary();  // Notify observers
     }
 
     /**
@@ -93,7 +101,6 @@ public class LibraryFacade {
      */
     public void returnBookFromMember(Book book, Member member) {
         librarian.returnBookFromMember(book, member);
-        library.updateLibrary();  // Notify observers
     }
 
     /**
@@ -105,7 +112,6 @@ public class LibraryFacade {
     public Genre createGenre(String name) {
         Genre genre = new Genre(name);
         library.addGenre(genre);
-        library.updateLibrary();  // Notify observers
         return genre;
     }
 
@@ -153,5 +159,13 @@ public class LibraryFacade {
             System.out.println(loan.getBook().getTitle() + " by " + loan.getBook().getAuthor() + " borrowed until " + loan.getReturnDate());
         }
         System.out.println("end of library status\n");
+    }
+
+    public Library getLibrary() {
+        return library;
+    }
+
+    public Librarian getLibrarian() {
+        return librarian;
     }
 }
